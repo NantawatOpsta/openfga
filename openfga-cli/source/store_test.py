@@ -3,7 +3,7 @@ import asyncio
 from store import create_store, get_store, delete_store
 
 
-class TestCreateStore(unittest.TestCase):
+class TestStore(unittest.TestCase):
 
     def test_create_get_delete_store(self):
         # create store

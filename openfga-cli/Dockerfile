@@ -12,4 +12,4 @@ COPY requirements.txt requirements.txt
 # install the requirements
 RUN pip install -r requirements.txt
 
-WORKDIR /home/app/source
+WORKDIR /home/app/openfga-cli

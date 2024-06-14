@@ -45,13 +45,3 @@ type folder
     define owner: [user]
     define parent: [folder]
     define viewer: [user, user:*, admin_group#member] or owner or viewer from parent
-
-# type doc
-#   relations
-#     define can_change_owner: owner
-#     define owner: [user]
-#     define parent: [folder]
-#     define can_read: viewer or owner or viewer from parent
-#     define can_share: owner or owner from parent
-#     define viewer: [user, user:*, admin_group#member]
-#     define can_write: owner or owner from parent

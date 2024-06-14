@@ -47,9 +47,11 @@ services:
       # Needed for the playground (Do not enable in prod!)
       - "3000:3000"
 
-  python:
-    build: .
-    container_name: python
+  openfga-cli:
+    build: 
+      context: openfga-cli
+      dockerfile: Dockerfile
+    container_name: openfga-cli
     volumes:
       - ./:/home/app
     command: python3
@@ -58,6 +60,18 @@ services:
     user: 1000:1000
     environment:
       - FGA_API_URL=http://openfga:8080
+
+  transformer:
+    build: 
+      context: transformer
+      dockerfile: Dockerfile
+    container_name: transformer
+    volumes:
+      - ./transformer/source:/home/node
+    command: node
+    tty: true
+    stdin_open: true
+    user: 1000:1000
 
 volumes:
   openfgadb:

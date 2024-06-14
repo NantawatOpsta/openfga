@@ -1,5 +1,5 @@
 @storeName=MyStore
-@openfgaUrl=http://localhost:8080
+@openfgaUrl=http://openfga:8080
 
 ### Create OpenFGA store reqeust api
 POST {{openfgaUrl}}/stores HTTP/1.1

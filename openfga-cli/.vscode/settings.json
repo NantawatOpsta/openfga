@@ -1,5 +1,5 @@
 {
-  "python.testing.unittestArgs": ["-v", "-s", "./openfga", "-p", "*_test.py"],
+  "python.testing.unittestArgs": ["-v", "-s", "./source", "-p", "*_test.py"],
   "[python]": {
     "editor.defaultFormatter": "ms-python.autopep8",
     "editor.formatOnSave": true

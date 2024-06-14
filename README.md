@@ -18,7 +18,7 @@ https://marketplace.visualstudio.com/items?itemName=humao.rest-client
 
 ```bash
 # start project
-docker compose up
+docker compose up --build
 ```
 
 ## Domain list
@@ -28,3 +28,10 @@ http://localhost:3000/playground
 
 Rest API: \
 http://localhost:8080
+
+## Get json file from DSL 
+open folder transformer check file source/model/autherization_model.dsl
+```bash
+# run this command to tranform file from autherization_model.dsl to autherization_model.json
+docker exec -it transformer npx @openfga/syntax-transformer transform --from=dsl --inputFile=autherization_model.openfga
+```
