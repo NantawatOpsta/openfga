@@ -1,0 +1,17 @@
+@storeName=MyStore
+@openfgaUrl=http://localhost:8080
+
+### Create OpenFGA store reqeust api
+POST {{openfgaUrl}}/stores HTTP/1.1
+content-type: application/json
+
+{
+    "name": "{{storeName}}"
+}
+
+### Get OpenFGA store request api
+GET {{openfgaUrl}}/stores HTTP/1.1
+
+### Delete OpenFGA store request api
+# @prompt storeId
+DELETE {{openfgaUrl}}/stores/{{storeId}} HTTP/1.1

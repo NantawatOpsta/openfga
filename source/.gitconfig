@@ -1,0 +1,7 @@
+[user]
+	email = nantawat@opsta.co.th
+	name = nantawat chairat
+[init]
+	defaultBranch = main
+[credential]
+	helper = "!f() { /home/app/.vscode-server/bin/89de5a8d4d6205e5b11647eb6a74844ca23d2573/node /tmp/vscode-remote-containers-e358864e-76a8-4648-a789-7e0eab10e2c2.js git-credential-helper $*; }; f"

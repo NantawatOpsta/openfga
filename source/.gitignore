@@ -1,0 +1,8 @@
+.cache
+.dotnet
+.gnupg
+.rest-client
+.ssh
+.vscode-server
+__pycache__
+.pytest_cache

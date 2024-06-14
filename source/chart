@@ -1,0 +1,57 @@
+model
+  schema 1.1
+
+type user
+
+type admin_group
+  relations
+    define member: [user]
+
+type super_tenant_admin_group
+  relations
+    define member: [user]
+
+type tenant
+  relations
+    define member: [user]
+
+type project
+  relations
+    define admin: [user]
+    define parent: [tenant]
+    define member: [user]
+    define can_add_member: admin
+    define viewer: [admin_group#member] or member or member from parent
+
+type resource
+  relations
+    define owner: [user]
+    define member: [user]
+    define parent: [project]
+    define can_change_owner: owner
+    define can_reconfig_without_approve: [admin_group#member]
+
+type service_account
+  relations
+    define member: [user]
+
+type request
+  relations
+    define member: [user]
+
+type folder
+  relations
+    define can_create_file: owner
+    define owner: [user]
+    define parent: [folder]
+    define viewer: [user, user:*, admin_group#member] or owner or viewer from parent
+
+# type doc
+#   relations
+#     define can_change_owner: owner
+#     define owner: [user]
+#     define parent: [folder]
+#     define can_read: viewer or owner or viewer from parent
+#     define can_share: owner or owner from parent
+#     define viewer: [user, user:*, admin_group#member]
+#     define can_write: owner or owner from parent
