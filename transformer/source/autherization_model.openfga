@@ -17,10 +17,10 @@ type tenant
 
 type project
   relations
-    define admin: [user]
     define parent: [tenant]
+    define project_admin: [user]
     define member: [user]
-    define can_add_member: admin
+    define can_add_member: project_admin
     define viewer: [admin_group#member] or member or member from parent
 
 type resource
@@ -31,17 +31,24 @@ type resource
     define can_change_owner: owner
     define can_reconfig_without_approve: [admin_group#member]
 
-type service_account
-  relations
-    define member: [user]
-
 type request
   relations
     define member: [user]
-
-type folder
+    define parent: [resource]
+  
+type approval
   relations
-    define can_create_file: owner
-    define owner: [user]
-    define parent: [folder]
-    define viewer: [user, user:*, admin_group#member] or owner or viewer from parent
+    define member: [user]
+    define parent: [request]
+    define can_approve: [admin_group#member, super_tenant_admin_group#member]
+
+type dashboard
+  relations
+    define can_view_all: [admin_group#member, super_tenant_admin_group#member]
+    define can_view_tenant: [tenant#member]
+
+type billing
+  relations
+    define member: [user]
+    define parent: [project]
+    define viewer: [admin_group#member]

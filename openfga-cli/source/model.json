@@ -1,318 +1,337 @@
 {
-    "schema_version": "1.1",
-    "type_definitions": [
-      {
-        "type": "user",
-        "relations": {},
-        "metadata": null
-      },
-      {
-        "type": "admin_group",
-        "relations": {
-          "member": {
-            "this": {}
-          }
-        },
-        "metadata": {
-          "relations": {
-            "member": {
-              "directly_related_user_types": [
-                {
-                  "type": "user"
-                }
-              ]
-            }
-          }
+  "schema_version": "1.1",
+  "type_definitions": [
+    {
+      "type": "user",
+      "relations": {},
+      "metadata": null
+    },
+    {
+      "type": "admin_group",
+      "relations": {
+        "member": {
+          "this": {}
         }
       },
-      {
-        "type": "super_tenant_admin_group",
+      "metadata": {
         "relations": {
           "member": {
-            "this": {}
-          }
-        },
-        "metadata": {
-          "relations": {
-            "member": {
-              "directly_related_user_types": [
-                {
-                  "type": "user"
-                }
-              ]
-            }
-          }
-        }
-      },
-      {
-        "type": "tenant",
-        "relations": {
-          "member": {
-            "this": {}
-          }
-        },
-        "metadata": {
-          "relations": {
-            "member": {
-              "directly_related_user_types": [
-                {
-                  "type": "user"
-                }
-              ]
-            }
-          }
-        }
-      },
-      {
-        "type": "project",
-        "relations": {
-          "admin": {
-            "this": {}
-          },
-          "parent": {
-            "this": {}
-          },
-          "member": {
-            "this": {}
-          },
-          "can_add_member": {
-            "computedUserset": {
-              "relation": "admin"
-            }
-          },
-          "viewer": {
-            "union": {
-              "child": [
-                {
-                  "this": {}
-                },
-                {
-                  "computedUserset": {
-                    "relation": "member"
-                  }
-                },
-                {
-                  "tupleToUserset": {
-                    "computedUserset": {
-                      "relation": "member"
-                    },
-                    "tupleset": {
-                      "relation": "parent"
-                    }
-                  }
-                }
-              ]
-            }
-          }
-        },
-        "metadata": {
-          "relations": {
-            "admin": {
-              "directly_related_user_types": [
-                {
-                  "type": "user"
-                }
-              ]
-            },
-            "parent": {
-              "directly_related_user_types": [
-                {
-                  "type": "tenant"
-                }
-              ]
-            },
-            "member": {
-              "directly_related_user_types": [
-                {
-                  "type": "user"
-                }
-              ]
-            },
-            "can_add_member": {
-              "directly_related_user_types": []
-            },
-            "viewer": {
-              "directly_related_user_types": [
-                {
-                  "type": "admin_group",
-                  "relation": "member"
-                }
-              ]
-            }
-          }
-        }
-      },
-      {
-        "type": "resource",
-        "relations": {
-          "owner": {
-            "this": {}
-          },
-          "member": {
-            "this": {}
-          },
-          "parent": {
-            "this": {}
-          },
-          "can_change_owner": {
-            "computedUserset": {
-              "relation": "owner"
-            }
-          },
-          "can_reconfig_without_approve": {
-            "this": {}
-          }
-        },
-        "metadata": {
-          "relations": {
-            "owner": {
-              "directly_related_user_types": [
-                {
-                  "type": "user"
-                }
-              ]
-            },
-            "member": {
-              "directly_related_user_types": [
-                {
-                  "type": "user"
-                }
-              ]
-            },
-            "parent": {
-              "directly_related_user_types": [
-                {
-                  "type": "project"
-                }
-              ]
-            },
-            "can_change_owner": {
-              "directly_related_user_types": []
-            },
-            "can_reconfig_without_approve": {
-              "directly_related_user_types": [
-                {
-                  "type": "admin_group",
-                  "relation": "member"
-                }
-              ]
-            }
-          }
-        }
-      },
-      {
-        "type": "service_account",
-        "relations": {
-          "member": {
-            "this": {}
-          }
-        },
-        "metadata": {
-          "relations": {
-            "member": {
-              "directly_related_user_types": [
-                {
-                  "type": "user"
-                }
-              ]
-            }
-          }
-        }
-      },
-      {
-        "type": "request",
-        "relations": {
-          "member": {
-            "this": {}
-          }
-        },
-        "metadata": {
-          "relations": {
-            "member": {
-              "directly_related_user_types": [
-                {
-                  "type": "user"
-                }
-              ]
-            }
-          }
-        }
-      },
-      {
-        "type": "folder",
-        "relations": {
-          "can_create_file": {
-            "computedUserset": {
-              "relation": "owner"
-            }
-          },
-          "owner": {
-            "this": {}
-          },
-          "parent": {
-            "this": {}
-          },
-          "viewer": {
-            "union": {
-              "child": [
-                {
-                  "this": {}
-                },
-                {
-                  "computedUserset": {
-                    "relation": "owner"
-                  }
-                },
-                {
-                  "tupleToUserset": {
-                    "computedUserset": {
-                      "relation": "viewer"
-                    },
-                    "tupleset": {
-                      "relation": "parent"
-                    }
-                  }
-                }
-              ]
-            }
-          }
-        },
-        "metadata": {
-          "relations": {
-            "can_create_file": {
-              "directly_related_user_types": []
-            },
-            "owner": {
-              "directly_related_user_types": [
-                {
-                  "type": "user"
-                }
-              ]
-            },
-            "parent": {
-              "directly_related_user_types": [
-                {
-                  "type": "folder"
-                }
-              ]
-            },
-            "viewer": {
-              "directly_related_user_types": [
-                {
-                  "type": "user"
-                },
-                {
-                  "type": "user",
-                  "wildcard": {}
-                },
-                {
-                  "type": "admin_group",
-                  "relation": "member"
-                }
-              ]
-            }
+            "directly_related_user_types": [
+              {
+                "type": "user"
+              }
+            ]
           }
         }
       }
-    ]
-  }
+    },
+    {
+      "type": "super_tenant_admin_group",
+      "relations": {
+        "member": {
+          "this": {}
+        }
+      },
+      "metadata": {
+        "relations": {
+          "member": {
+            "directly_related_user_types": [
+              {
+                "type": "user"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "type": "tenant",
+      "relations": {
+        "member": {
+          "this": {}
+        }
+      },
+      "metadata": {
+        "relations": {
+          "member": {
+            "directly_related_user_types": [
+              {
+                "type": "user"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "type": "project",
+      "relations": {
+        "parent": {
+          "this": {}
+        },
+        "project_admin": {
+          "this": {}
+        },
+        "member": {
+          "this": {}
+        },
+        "can_add_member": {
+          "computedUserset": {
+            "relation": "project_admin"
+          }
+        },
+        "viewer": {
+          "union": {
+            "child": [
+              {
+                "this": {}
+              },
+              {
+                "computedUserset": {
+                  "relation": "member"
+                }
+              },
+              {
+                "tupleToUserset": {
+                  "computedUserset": {
+                    "relation": "member"
+                  },
+                  "tupleset": {
+                    "relation": "parent"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "relations": {
+          "parent": {
+            "directly_related_user_types": [
+              {
+                "type": "tenant"
+              }
+            ]
+          },
+          "project_admin": {
+            "directly_related_user_types": [
+              {
+                "type": "user"
+              }
+            ]
+          },
+          "member": {
+            "directly_related_user_types": [
+              {
+                "type": "user"
+              }
+            ]
+          },
+          "can_add_member": {
+            "directly_related_user_types": []
+          },
+          "viewer": {
+            "directly_related_user_types": [
+              {
+                "type": "admin_group",
+                "relation": "member"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "type": "resource",
+      "relations": {
+        "owner": {
+          "this": {}
+        },
+        "member": {
+          "this": {}
+        },
+        "parent": {
+          "this": {}
+        },
+        "can_change_owner": {
+          "computedUserset": {
+            "relation": "owner"
+          }
+        },
+        "can_reconfig_without_approve": {
+          "this": {}
+        }
+      },
+      "metadata": {
+        "relations": {
+          "owner": {
+            "directly_related_user_types": [
+              {
+                "type": "user"
+              }
+            ]
+          },
+          "member": {
+            "directly_related_user_types": [
+              {
+                "type": "user"
+              }
+            ]
+          },
+          "parent": {
+            "directly_related_user_types": [
+              {
+                "type": "project"
+              }
+            ]
+          },
+          "can_change_owner": {
+            "directly_related_user_types": []
+          },
+          "can_reconfig_without_approve": {
+            "directly_related_user_types": [
+              {
+                "type": "admin_group",
+                "relation": "member"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "type": "request",
+      "relations": {
+        "member": {
+          "this": {}
+        },
+        "parent": {
+          "this": {}
+        }
+      },
+      "metadata": {
+        "relations": {
+          "member": {
+            "directly_related_user_types": [
+              {
+                "type": "user"
+              }
+            ]
+          },
+          "parent": {
+            "directly_related_user_types": [
+              {
+                "type": "resource"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "type": "approval",
+      "relations": {
+        "member": {
+          "this": {}
+        },
+        "parent": {
+          "this": {}
+        },
+        "can_approve": {
+          "this": {}
+        }
+      },
+      "metadata": {
+        "relations": {
+          "member": {
+            "directly_related_user_types": [
+              {
+                "type": "user"
+              }
+            ]
+          },
+          "parent": {
+            "directly_related_user_types": [
+              {
+                "type": "request"
+              }
+            ]
+          },
+          "can_approve": {
+            "directly_related_user_types": [
+              {
+                "type": "admin_group",
+                "relation": "member"
+              },
+              {
+                "type": "super_tenant_admin_group",
+                "relation": "member"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "type": "dashboard",
+      "relations": {
+        "viewer": {
+          "this": {}
+        }
+      },
+      "metadata": {
+        "relations": {
+          "viewer": {
+            "directly_related_user_types": [
+              {
+                "type": "admin_group",
+                "relation": "member"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "type": "billing",
+      "relations": {
+        "member": {
+          "this": {}
+        },
+        "parent": {
+          "this": {}
+        },
+        "viewer": {
+          "this": {}
+        }
+      },
+      "metadata": {
+        "relations": {
+          "member": {
+            "directly_related_user_types": [
+              {
+                "type": "user"
+              }
+            ]
+          },
+          "parent": {
+            "directly_related_user_types": [
+              {
+                "type": "project"
+              }
+            ]
+          },
+          "viewer": {
+            "directly_related_user_types": [
+              {
+                "type": "admin_group",
+                "relation": "member"
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}
