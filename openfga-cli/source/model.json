@@ -49,6 +49,26 @@
       "relations": {
         "member": {
           "this": {}
+        },
+        "can_add_tenant": {
+          "this": {}
+        },
+        "can_edit_tenant": {
+          "this": {}
+        },
+        "can_view": {
+          "union": {
+            "child": [
+              {
+                "this": {}
+              },
+              {
+                "computedUserset": {
+                  "relation": "member"
+                }
+              }
+            ]
+          }
         }
       },
       "metadata": {
@@ -57,6 +77,34 @@
             "directly_related_user_types": [
               {
                 "type": "user"
+              }
+            ]
+          },
+          "can_add_tenant": {
+            "directly_related_user_types": [
+              {
+                "type": "admin_group",
+                "relation": "member"
+              }
+            ]
+          },
+          "can_edit_tenant": {
+            "directly_related_user_types": [
+              {
+                "type": "admin_group",
+                "relation": "member"
+              }
+            ]
+          },
+          "can_view": {
+            "directly_related_user_types": [
+              {
+                "type": "admin_group",
+                "relation": "member"
+              },
+              {
+                "type": "super_tenant_admin_group",
+                "relation": "member"
               }
             ]
           }
@@ -276,16 +324,31 @@
     {
       "type": "dashboard",
       "relations": {
-        "viewer": {
+        "can_view_all": {
+          "this": {}
+        },
+        "can_view_tenant": {
           "this": {}
         }
       },
       "metadata": {
         "relations": {
-          "viewer": {
+          "can_view_all": {
             "directly_related_user_types": [
               {
                 "type": "admin_group",
+                "relation": "member"
+              },
+              {
+                "type": "super_tenant_admin_group",
+                "relation": "member"
+              }
+            ]
+          },
+          "can_view_tenant": {
+            "directly_related_user_types": [
+              {
+                "type": "tenant",
                 "relation": "member"
               }
             ]

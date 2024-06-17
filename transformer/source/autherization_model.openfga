@@ -14,6 +14,9 @@ type super_tenant_admin_group
 type tenant
   relations
     define member: [user]
+    define can_add_tenant: [admin_group#member]
+    define can_edit_tenant: [admin_group#member]
+    define can_view: [admin_group#member, super_tenant_admin_group#member] or member
 
 type project
   relations

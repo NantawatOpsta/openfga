@@ -15,7 +15,7 @@ class TestAuthorizationModel(unittest.TestCase):
             json_model = file.read()
 
         # write the authorization model to the store
-        asyncio.run(write_authorization_model(store['id'], json_model))
+        asyncio.run(write_authorization_model(store.id, json_model))
 
         # delete the store
-        asyncio.run(delete_store(store['id']))
+        asyncio.run(delete_store(store.id))
