@@ -1,3 +1,5 @@
+import os
+import requests
 from client import get_openfga_client
 from openfga_sdk.models.fga_object import FgaObject
 from openfga_sdk.client.models.tuple import ClientTuple
@@ -96,27 +98,55 @@ async def RequestList(
     return await client.list_objects(body, options)
 
 
-async def RequestListUser(
-    store_id,
-    authorization_model_id,
-    relation,
-    object_type,
-    object_id
-):
-    client = get_openfga_client(
-        store_id=store_id, authorization_model_id=authorization_model_id
-    )
+# def RequestListUser(
+#     store_id,
+#     authorization_model_id,
+#     relation,
+#     object_type,
+#     object_id
+# ):
 
-    options = {
-        "authorization_model_id": authorization_model_id
-    }
+#     url = "%s/stores/%s/list-users" % (os.environ.get('FGA_API_URL'), store_id)
+#     print(url)
+#     data = {
+#         "authorization_model_id": authorization_model_id,
+#         "object": {
+#             "type": object_type,
+#             "id": object_id
+#         },
+#         "relation": relation,
+#         "user_filters": [
+#             {
+#                 "type": "user"
+#             }
+#         ],
+#     }
+#     request_openfga = requests.post(url, json=data)
+#     return request_openfga.json()
 
-    body = ClientListUsersRequest(
-        object=FgaObject(type=object_type, id=object_id),
-        relation=relation,
-        user_filters=[
-            UserTypeFilter(type="user"),
-        ]
-    )
 
-    return await client.list_users(body, options)
+# async def RequestListUser(
+#     store_id,
+#     authorization_model_id,
+#     relation,
+#     object_type,
+#     object_id
+# ):
+#     client = get_openfga_client(
+#         store_id=store_id, authorization_model_id=authorization_model_id
+#     )
+
+#     options = {
+#         "authorization_model_id": authorization_model_id
+#     }
+
+#     body = ClientListUsersRequest(
+#         object=FgaObject(type=object_type, id=object_id),
+#         relation=relation,
+#         user_filters=[
+#             UserTypeFilter(type="user"),
+#         ],
+#         context={}
+#     )
+
+#     return await client.list_users(body, options)

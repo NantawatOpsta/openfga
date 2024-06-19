@@ -180,8 +180,31 @@
           "this": {}
         },
         "can_change_owner": {
-          "computedUserset": {
-            "relation": "owner"
+          "union": {
+            "child": [
+              {
+                "this": {}
+              },
+              {
+                "computedUserset": {
+                  "relation": "owner"
+                }
+              }
+            ]
+          }
+        },
+        "can_reset_password": {
+          "union": {
+            "child": [
+              {
+                "this": {}
+              },
+              {
+                "computedUserset": {
+                  "relation": "owner"
+                }
+              }
+            ]
           }
         },
         "can_reconfig_without_approve": {
@@ -212,7 +235,20 @@
             ]
           },
           "can_change_owner": {
-            "directly_related_user_types": []
+            "directly_related_user_types": [
+              {
+                "type": "group",
+                "relation": "member"
+              }
+            ]
+          },
+          "can_reset_password": {
+            "directly_related_user_types": [
+              {
+                "type": "group",
+                "relation": "member"
+              }
+            ]
           },
           "can_reconfig_without_approve": {
             "directly_related_user_types": [

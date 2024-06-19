@@ -15,3 +15,21 @@ GET {{openfgaUrl}}/stores HTTP/1.1
 ### Delete OpenFGA store request api
 # @prompt storeId
 DELETE {{openfgaUrl}}/stores/{{storeId}} HTTP/1.1
+
+### Get User list
+# @prompt storeId
+POST {{openfgaUrl}}/stores/{{storeId}}/list-users HTTP/1.1
+content-type: application/json
+
+{
+    "object": {
+        "type": "tenant",
+        "id": "tenant1"
+    },
+    "relation": "can_view",
+    "user_filters": [
+        {
+            "type": "user"
+        }
+    ]
+}
