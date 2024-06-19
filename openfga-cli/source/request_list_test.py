@@ -2,12 +2,12 @@ import asyncio
 import unittest
 from store import create_store, delete_store
 from model import write_authorization_model
-from request import RequestWrite, RequestDelete, RequestCheck
+from request import RequestWrite, RequestList
 
 
 class TestRequestList(unittest.TestCase):
 
-    def test_create_delete(self):
+    def test_get_list_tenant_admin_can_access(self):
         # create a store
         store = asyncio.run(create_store("store"))
 
@@ -21,18 +21,47 @@ class TestRequestList(unittest.TestCase):
         asyncio.run(RequestWrite(
             store.id,
             model.authorization_model_id,
-            "user:admin",
+            "user:admin1",
             "member",
             "group:admin"
         ))
 
-        asyncio.run(RequestDelete(
+        asyncio.run(RequestWrite(
             store.id,
             model.authorization_model_id,
-            "user:admin",
-            "member",
-            "group:admin"
+            "group:admin#member",
+            "can_view",
+            "tenant:tenant1"
         ))
+
+        asyncio.run(RequestWrite(
+            store.id,
+            model.authorization_model_id,
+            "group:admin#member",
+            "can_view",
+            "tenant:tenant2"
+        ))
+
+        asyncio.run(RequestWrite(
+            store.id,
+            model.authorization_model_id,
+            "group:admin#member",
+            "can_view",
+            "tenant:tenant3"
+        ))
+
+        list_of_tenants = asyncio.run(RequestList(
+            store.id,
+            model.authorization_model_id,
+            "user:admin1",
+            "can_view",
+            "tenant"
+        ))
+
+        self.assertEqual(len(list_of_tenants.objects), 3)
+        self.assertIn("tenant:tenant1", list_of_tenants.objects)
+        self.assertIn("tenant:tenant2", list_of_tenants.objects)
+        self.assertIn("tenant:tenant3", list_of_tenants.objects)
 
         # delete the store
         asyncio.run(delete_store(store.id))
