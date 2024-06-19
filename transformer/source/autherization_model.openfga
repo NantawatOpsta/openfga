@@ -27,7 +27,8 @@ type resource
     define owner: [user]
     define member: [user]
     define parent: [project]
-    define can_change_owner: owner
+    define can_change_owner: [group#member] or owner
+    define can_reset_password: [group#member] or owner
     define can_reconfig_without_approve: [group#member]
 
 type request
