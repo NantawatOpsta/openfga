@@ -2,10 +2,10 @@ import asyncio
 import unittest
 from store import create_store, delete_store
 from model import write_authorization_model
-from request import RequestWrite, RequestDelete, RequestCheck, RequestList
+from request import RequestWrite, RequestDelete, RequestCheck
 
 
-class TestRelation(unittest.TestCase):
+class TestRequestCheck(unittest.TestCase):
 
     def test_create_delete(self):
         # create a store
@@ -88,14 +88,14 @@ class TestRelation(unittest.TestCase):
         assert check_user_02.allowed is True
 
         # check if user1 can view tenant2
-        check_user_03 = asyncio.run(RequestCheck(
+        check_user_01_not_permission = asyncio.run(RequestCheck(
             store.id,
             model.authorization_model_id,
             "user:user1",
             "can_view",
             "tenant:tenant2"
         ))
-        assert check_user_03.allowed is False
+        assert check_user_01_not_permission.allowed is False
 
         # delete the store
         asyncio.run(delete_store(store.id))
