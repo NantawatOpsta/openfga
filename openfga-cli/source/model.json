@@ -31,10 +31,10 @@
         "member": {
           "this": {}
         },
-        "can_add_tenant": {
+        "can_add": {
           "this": {}
         },
-        "can_edit_tenant": {
+        "can_edit": {
           "this": {}
         },
         "can_view": {
@@ -61,7 +61,7 @@
               }
             ]
           },
-          "can_add_tenant": {
+          "can_add": {
             "directly_related_user_types": [
               {
                 "type": "group",
@@ -69,7 +69,7 @@
               }
             ]
           },
-          "can_edit_tenant": {
+          "can_edit": {
             "directly_related_user_types": [
               {
                 "type": "group",
@@ -100,12 +100,12 @@
         "member": {
           "this": {}
         },
-        "can_add_member": {
+        "can_add_member_to_project": {
           "computedUserset": {
             "relation": "project_admin"
           }
         },
-        "viewer": {
+        "can_view": {
           "union": {
             "child": [
               {
@@ -153,10 +153,10 @@
               }
             ]
           },
-          "can_add_member": {
+          "can_add_member_to_project": {
             "directly_related_user_types": []
           },
-          "viewer": {
+          "can_view": {
             "directly_related_user_types": [
               {
                 "type": "group",

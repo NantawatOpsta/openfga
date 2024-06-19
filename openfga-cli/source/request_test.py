@@ -87,10 +87,64 @@ class TestRelation(unittest.TestCase):
         ))
         assert check_user_02.allowed is True
 
+        # check if user1 can view tenant2
+        check_user_03 = asyncio.run(RequestCheck(
+            store.id,
+            model.authorization_model_id,
+            "user:user1",
+            "can_view",
+            "tenant:tenant2"
+        ))
+        assert check_user_03.allowed is False
+
+        # delete the store
+        asyncio.run(delete_store(store.id))
+
+    # add user1 tenant1 and project1, after thant add user1 to tenant 1 use1 can view project under tenant1
+    def test_user_access_indirect_check(self):
+        # create a store
+        store = asyncio.run(create_store("store"))
+
+        # read file model.json and convert it to json
+        with open('/home/app/openfga-cli/source/model.json', 'r') as file:
+            json_model = file.read()
+
+        # write the authorization model to the store
+        model = asyncio.run(write_authorization_model(store.id, json_model))
+
+        # add user1 to tenant1
+        asyncio.run(RequestWrite(
+            store.id,
+            model.authorization_model_id,
+            "user:user1",
+            "member",
+            "tenant:tenant1"
+        ))
+
+        # add tenant1 to project1 parent
+        asyncio.run(RequestWrite(
+            store.id,
+            model.authorization_model_id,
+            "tenant:tenant1",
+            "parent",
+            "project:project1"
+        ))
+
+        # check if user1 can view project1
+        check_user_01 = asyncio.run(RequestCheck(
+            store.id,
+            model.authorization_model_id,
+            "user:user1",
+            "can_view",
+            "project:project1"
+        ))
+        assert check_user_01.allowed is True
+
         # delete the store
         asyncio.run(delete_store(store.id))
 
     # add admin to admin_group can view all
+
     def test_admin_group_check(self):
         # create a store
         store = asyncio.run(create_store("store"))

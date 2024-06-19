@@ -10,8 +10,8 @@ type group
 type tenant
   relations
     define member: [user]
-    define can_add_tenant: [group#member]
-    define can_edit_tenant: [group#member]
+    define can_add: [group#member]
+    define can_edit: [group#member]
     define can_view: [group#member] or member
 
 type project
@@ -19,8 +19,8 @@ type project
     define parent: [tenant]
     define project_admin: [user]
     define member: [user]
-    define can_add_member: project_admin
-    define viewer: [group#member] or member or member from parent
+    define can_add_member_to_project: project_admin
+    define can_view: [group#member] or member or member from parent
 
 type resource
   relations
