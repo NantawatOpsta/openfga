@@ -23,7 +23,7 @@ class TestRelation(unittest.TestCase):
             model.authorization_model_id,
             "user:admin",
             "member",
-            "admin_group:admin"
+            "group:admin"
         ))
 
         asyncio.run(RequestDelete(
@@ -31,7 +31,7 @@ class TestRelation(unittest.TestCase):
             model.authorization_model_id,
             "user:admin",
             "member",
-            "admin_group:admin"
+            "group:admin"
         ))
 
         # delete the store
@@ -39,8 +39,7 @@ class TestRelation(unittest.TestCase):
 
     # add user1 tenant1 can view only tenant1
     # add user2 tenant2 can view only tenant2
-    # add admin to admin_group can view all
-    def test_user_check(self):
+    def test_user_access_direct_check(self):
         # create a store
         store = asyncio.run(create_store("store"))
 
@@ -68,14 +67,6 @@ class TestRelation(unittest.TestCase):
             "tenant:tenant2"
         ))
 
-        asyncio.run(RequestWrite(
-            store.id,
-            model.authorization_model_id,
-            "user:admin",
-            "member",
-            "admin_group:admin"
-        ))
-
         # check if user1 can view tenant1
         check_user_01 = asyncio.run(RequestCheck(
             store.id,
@@ -96,7 +87,40 @@ class TestRelation(unittest.TestCase):
         ))
         assert check_user_02.allowed is True
 
-        # check if user2 can view tenant2
+        # delete the store
+        asyncio.run(delete_store(store.id))
+
+    # add admin to admin_group can view all
+    def test_admin_group_check(self):
+        # create a store
+        store = asyncio.run(create_store("store"))
+
+        # read file model.json and convert it to json
+        with open('/home/app/openfga-cli/source/model.json', 'r') as file:
+            json_model = file.read()
+
+        # write the authorization model to the store
+        model = asyncio.run(write_authorization_model(store.id, json_model))
+
+        # write the admin to admin group
+        asyncio.run(RequestWrite(
+            store.id,
+            model.authorization_model_id,
+            "user:admin",
+            "member",
+            "group:admin"
+        ))
+
+        # write the admin group to can view all
+        asyncio.run(RequestWrite(
+            store.id,
+            model.authorization_model_id,
+            "group:admin#member",
+            "can_view",
+            "tenant:tenant1"
+        ))
+
+        # check if admin can view tenant1
         admin = asyncio.run(RequestCheck(
             store.id,
             model.authorization_model_id,
@@ -104,19 +128,8 @@ class TestRelation(unittest.TestCase):
             "can_view",
             "tenant:tenant1"
         ))
-        # assert admin.allowed is True
-        print("--check--")
-        print(admin)
 
-        admin_relate = asyncio.run(RequestList(
-            store.id,
-            model.authorization_model_id,
-            "user:user1",
-            "can_view",
-            "tenant"
-        ))
-        print("--list--")
-        print(admin_relate)
+        assert admin.allowed is True
 
         # delete the store
         asyncio.run(delete_store(store.id))

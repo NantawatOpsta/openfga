@@ -7,26 +7,7 @@
       "metadata": null
     },
     {
-      "type": "admin_group",
-      "relations": {
-        "member": {
-          "this": {}
-        }
-      },
-      "metadata": {
-        "relations": {
-          "member": {
-            "directly_related_user_types": [
-              {
-                "type": "user"
-              }
-            ]
-          }
-        }
-      }
-    },
-    {
-      "type": "super_tenant_admin_group",
+      "type": "group",
       "relations": {
         "member": {
           "this": {}
@@ -83,7 +64,7 @@
           "can_add_tenant": {
             "directly_related_user_types": [
               {
-                "type": "admin_group",
+                "type": "group",
                 "relation": "member"
               }
             ]
@@ -91,7 +72,7 @@
           "can_edit_tenant": {
             "directly_related_user_types": [
               {
-                "type": "admin_group",
+                "type": "group",
                 "relation": "member"
               }
             ]
@@ -99,11 +80,7 @@
           "can_view": {
             "directly_related_user_types": [
               {
-                "type": "admin_group",
-                "relation": "member"
-              },
-              {
-                "type": "super_tenant_admin_group",
+                "type": "group",
                 "relation": "member"
               }
             ]
@@ -182,7 +159,7 @@
           "viewer": {
             "directly_related_user_types": [
               {
-                "type": "admin_group",
+                "type": "group",
                 "relation": "member"
               }
             ]
@@ -240,7 +217,7 @@
           "can_reconfig_without_approve": {
             "directly_related_user_types": [
               {
-                "type": "admin_group",
+                "type": "group",
                 "relation": "member"
               }
             ]
@@ -309,11 +286,7 @@
           "can_approve": {
             "directly_related_user_types": [
               {
-                "type": "admin_group",
-                "relation": "member"
-              },
-              {
-                "type": "super_tenant_admin_group",
+                "type": "group",
                 "relation": "member"
               }
             ]
@@ -336,11 +309,7 @@
           "can_view_all": {
             "directly_related_user_types": [
               {
-                "type": "admin_group",
-                "relation": "member"
-              },
-              {
-                "type": "super_tenant_admin_group",
+                "type": "group",
                 "relation": "member"
               }
             ]
@@ -388,7 +357,7 @@
           "viewer": {
             "directly_related_user_types": [
               {
-                "type": "admin_group",
+                "type": "group",
                 "relation": "member"
               }
             ]

@@ -3,20 +3,16 @@ model
 
 type user
 
-type admin_group
-  relations
-    define member: [user]
-
-type super_tenant_admin_group
+type group
   relations
     define member: [user]
 
 type tenant
   relations
     define member: [user]
-    define can_add_tenant: [admin_group#member]
-    define can_edit_tenant: [admin_group#member]
-    define can_view: [admin_group#member, super_tenant_admin_group#member] or member
+    define can_add_tenant: [group#member]
+    define can_edit_tenant: [group#member]
+    define can_view: [group#member] or member
 
 type project
   relations
@@ -24,7 +20,7 @@ type project
     define project_admin: [user]
     define member: [user]
     define can_add_member: project_admin
-    define viewer: [admin_group#member] or member or member from parent
+    define viewer: [group#member] or member or member from parent
 
 type resource
   relations
@@ -32,7 +28,7 @@ type resource
     define member: [user]
     define parent: [project]
     define can_change_owner: owner
-    define can_reconfig_without_approve: [admin_group#member]
+    define can_reconfig_without_approve: [group#member]
 
 type request
   relations
@@ -43,15 +39,15 @@ type approval
   relations
     define member: [user]
     define parent: [request]
-    define can_approve: [admin_group#member, super_tenant_admin_group#member]
+    define can_approve: [group#member]
 
 type dashboard
   relations
-    define can_view_all: [admin_group#member, super_tenant_admin_group#member]
+    define can_view_all: [group#member]
     define can_view_tenant: [tenant#member]
 
 type billing
   relations
     define member: [user]
     define parent: [project]
-    define viewer: [admin_group#member]
+    define viewer: [group#member]
