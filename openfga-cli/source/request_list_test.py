@@ -233,5 +233,18 @@ class TestRequestList(unittest.TestCase):
             "tenant:tenant1"
         ))
 
+        list_of_relations = asyncio.run(RequestListRelations(
+            store.id,
+            model.authorization_model_id,
+            "user:admin1",
+            ["can_view", "can_edit", "can_add"],
+            "tenant:tenant1"
+        ))
+
+        assert len(list_of_relations) == 3
+        assert "can_view" in list_of_relations
+        assert "can_edit" in list_of_relations
+        assert "can_add" in list_of_relations
+
         # delete the store
         asyncio.run(delete_store(store.id))
