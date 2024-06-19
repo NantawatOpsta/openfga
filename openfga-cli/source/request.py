@@ -7,6 +7,7 @@ from openfga_sdk.client.models.write_request import ClientWriteRequest
 from openfga_sdk.client.models.check_request import ClientCheckRequest
 from openfga_sdk.client.models.list_objects_request import ClientListObjectsRequest
 from openfga_sdk.client.models.list_users_request import ClientListUsersRequest
+from openfga_sdk.client.models.list_relations_request import ClientListRelationsRequest
 from openfga_sdk.models.user_type_filter import UserTypeFilter
 
 
@@ -150,3 +151,27 @@ async def RequestListUser(
     )
 
     return await client.list_users(body, options)
+
+
+async def RequestListRelations(
+    store_id,
+    authorization_model_id,
+    user,
+    relations,
+    object
+):
+    client = get_openfga_client(
+        store_id=store_id, authorization_model_id=authorization_model_id
+    )
+
+    options = {
+        "authorization_model_id": authorization_model_id
+    }
+
+    body = ClientListRelationsRequest(
+        user=user,
+        relations=relations,
+        object=object,
+    )
+
+    return await client.list_relations(body, options)

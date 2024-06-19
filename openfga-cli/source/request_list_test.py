@@ -3,7 +3,7 @@ import unittest
 from store import create_store, delete_store
 from model import write_authorization_model
 from request import RequestWrite, RequestList
-from request import RequestListUser, RequestListUserJson
+from request import RequestListUser, RequestListUserJson, RequestListRelations
 
 
 class TestRequestList(unittest.TestCase):
@@ -186,6 +186,52 @@ class TestRequestList(unittest.TestCase):
             "tenant1"
         )
         assert len(list_of_members['users']) == 3
+
+        # delete the store
+        asyncio.run(delete_store(store.id))
+
+    def test_list_user_relations(self):
+        # create a store
+        store = asyncio.run(create_store("store"))
+
+        # read file model.json and convert it to json
+        with open('/home/app/openfga-cli/source/model.json', 'r') as file:
+            json_model = file.read()
+
+        # write the authorization model to the store
+        model = asyncio.run(write_authorization_model(store.id, json_model))
+
+        asyncio.run(RequestWrite(
+            store.id,
+            model.authorization_model_id,
+            "user:admin1",
+            "member",
+            "group:admin"
+        ))
+
+        asyncio.run(RequestWrite(
+            store.id,
+            model.authorization_model_id,
+            "group:admin#member",
+            "can_view",
+            "tenant:tenant1"
+        ))
+
+        asyncio.run(RequestWrite(
+            store.id,
+            model.authorization_model_id,
+            "group:admin#member",
+            "can_edit",
+            "tenant:tenant1"
+        ))
+
+        asyncio.run(RequestWrite(
+            store.id,
+            model.authorization_model_id,
+            "group:admin#member",
+            "can_add",
+            "tenant:tenant1"
+        ))
 
         # delete the store
         asyncio.run(delete_store(store.id))
