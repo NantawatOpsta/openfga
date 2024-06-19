@@ -5,7 +5,7 @@ from openfga_sdk.client.models.check_request import ClientCheckRequest
 from openfga_sdk.client.models.list_objects_request import ClientListObjectsRequest
 
 
-async def WriteRequestCreate(
+async def RequestWrite(
         store_id, authorization_model_id, user, relation, obj
 ):
     client = get_openfga_client(
@@ -29,7 +29,7 @@ async def WriteRequestCreate(
     return await client.write(body, options)
 
 
-async def WriteRequestDelete(
+async def RequestDelete(
         store_id, authorization_model_id, user, relation, obj
 ):
     client = get_openfga_client(
@@ -53,7 +53,7 @@ async def WriteRequestDelete(
     return await client.write(body, options)
 
 
-async def WriteRequestCheck(
+async def RequestCheck(
     store_id, authorization_model_id, user, relation, obj
 ):
     client = get_openfga_client(
@@ -73,7 +73,7 @@ async def WriteRequestCheck(
     return await client.check(body, options)
 
 
-async def WriteRequestList(
+async def RequestList(
     store_id, authorization_model_id, user, relation, type_name
 ):
     client = get_openfga_client(
