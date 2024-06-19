@@ -38,7 +38,7 @@ services:
       - OPENFGA_DATASTORE_ENGINE=postgres
       - OPENFGA_DATASTORE_URI=postgres://postgres:password@openfgadb:5432/postgres?sslmode=disable
       - OPENFGA_LOG_FORMAT=json
-    command: run
+    command: run --experimentals enable-list-users
     ports:
       # Needed for the http server
       - "8080:8080"

@@ -3,7 +3,7 @@ import unittest
 from store import create_store, delete_store
 from model import write_authorization_model
 from request import RequestWrite, RequestList
-# from request import RequestListUser
+from request import RequestListUser, RequestListUserJson
 
 
 class TestRequestList(unittest.TestCase):
@@ -126,66 +126,66 @@ class TestRequestList(unittest.TestCase):
         # delete the store
         asyncio.run(delete_store(store.id))
 
-    # def test_list_member_in_tenant(self):
-    #     # create a store
-    #     store = asyncio.run(create_store("store"))
+    def test_list_member_in_tenant(self):
+        # create a store
+        store = asyncio.run(create_store("store"))
 
-    #     # read file model.json and convert it to json
-    #     with open('/home/app/openfga-cli/source/model.json', 'r') as file:
-    #         json_model = file.read()
+        # read file model.json and convert it to json
+        with open('/home/app/openfga-cli/source/model.json', 'r') as file:
+            json_model = file.read()
 
-    #     # write the authorization model to the store
-    #     model = asyncio.run(write_authorization_model(store.id, json_model))
+        # write the authorization model to the store
+        model = asyncio.run(write_authorization_model(store.id, json_model))
 
-    #     asyncio.run(RequestWrite(
-    #         store.id,
-    #         model.authorization_model_id,
-    #         "user:admin1",
-    #         "member",
-    #         "group:admin"
-    #     ))
+        asyncio.run(RequestWrite(
+            store.id,
+            model.authorization_model_id,
+            "user:admin1",
+            "member",
+            "group:admin"
+        ))
 
-    #     asyncio.run(RequestWrite(
-    #         store.id,
-    #         model.authorization_model_id,
-    #         "user:admin2",
-    #         "member",
-    #         "group:admin"
-    #     ))
+        asyncio.run(RequestWrite(
+            store.id,
+            model.authorization_model_id,
+            "user:admin2",
+            "member",
+            "group:admin"
+        ))
 
-    #     asyncio.run(RequestWrite(
-    #         store.id,
-    #         model.authorization_model_id,
-    #         "user:admin3",
-    #         "member",
-    #         "group:admin"
-    #     ))
+        asyncio.run(RequestWrite(
+            store.id,
+            model.authorization_model_id,
+            "user:admin3",
+            "member",
+            "group:admin"
+        ))
 
-    #     asyncio.run(RequestWrite(
-    #         store.id,
-    #         model.authorization_model_id,
-    #         "group:admin#member",
-    #         "can_view",
-    #         "tenant:tenant1"
-    #     ))
+        asyncio.run(RequestWrite(
+            store.id,
+            model.authorization_model_id,
+            "group:admin#member",
+            "can_view",
+            "tenant:tenant1"
+        ))
 
-    #     # list_of_members = asyncio.run(RequestListUser(
-    #     #     store.id,
-    #     #     model.authorization_model_id,
-    #     #     "can_view",
-    #     #     "tenant",
-    #     #     "tenant1"
-    #     # ))
+        list_of_members = asyncio.run(RequestListUser(
+            store.id,
+            model.authorization_model_id,
+            "can_view",
+            "tenant",
+            "tenant1"
+        ))
+        assert len(list_of_members.users) == 3
 
-    #     # list_of_members = RequestListUser(
-    #     #     store.id,
-    #     #     model.authorization_model_id,
-    #     #     "can_view",
-    #     #     "tenant",
-    #     #     "tenant1"
-    #     # )
+        list_of_members = RequestListUserJson(
+            store.id,
+            model.authorization_model_id,
+            "can_view",
+            "tenant",
+            "tenant1"
+        )
+        assert len(list_of_members['users']) == 3
 
-    #     # self.assertEqual(len(list_of_members.objects), 3)
-
-    #     # delete the store
-    #     asyncio.run(delete_store(store.id))
+        # delete the store
+        asyncio.run(delete_store(store.id))

@@ -98,55 +98,55 @@ async def RequestList(
     return await client.list_objects(body, options)
 
 
-# def RequestListUser(
-#     store_id,
-#     authorization_model_id,
-#     relation,
-#     object_type,
-#     object_id
-# ):
+def RequestListUserJson(
+    store_id,
+    authorization_model_id,
+    relation,
+    object_type,
+    object_id
+):
 
-#     url = "%s/stores/%s/list-users" % (os.environ.get('FGA_API_URL'), store_id)
-#     print(url)
-#     data = {
-#         "authorization_model_id": authorization_model_id,
-#         "object": {
-#             "type": object_type,
-#             "id": object_id
-#         },
-#         "relation": relation,
-#         "user_filters": [
-#             {
-#                 "type": "user"
-#             }
-#         ],
-#     }
-#     request_openfga = requests.post(url, json=data)
-#     return request_openfga.json()
+    url = "%s/stores/%s/list-users" % (os.environ.get('FGA_API_URL'), store_id)
+    print(url)
+    data = {
+        "authorization_model_id": authorization_model_id,
+        "object": {
+            "type": object_type,
+            "id": object_id
+        },
+        "relation": relation,
+        "user_filters": [
+            {
+                "type": "user"
+            }
+        ],
+    }
+    request_openfga = requests.post(url, json=data)
+    return request_openfga.json()
 
 
-# async def RequestListUser(
-#     store_id,
-#     authorization_model_id,
-#     relation,
-#     object_type,
-#     object_id
-# ):
-#     client = get_openfga_client(
-#         store_id=store_id, authorization_model_id=authorization_model_id
-#     )
+async def RequestListUser(
+    store_id,
+    authorization_model_id,
+    relation,
+    object_type,
+    object_id
+):
+    client = get_openfga_client(
+        store_id=store_id, authorization_model_id=authorization_model_id
+    )
 
-#     options = {
-#         "authorization_model_id": authorization_model_id
-#     }
+    options = {
+        "authorization_model_id": authorization_model_id
+    }
 
-#     body = ClientListUsersRequest(
-#         object=FgaObject(type=object_type, id=object_id),
-#         relation=relation,
-#         user_filters=[
-#             UserTypeFilter(type="user"),
-#         ],
-#         context={}
-#     )
+    body = ClientListUsersRequest(
+        object=FgaObject(type=object_type, id=object_id),
+        relation=relation,
+        user_filters=[
+            UserTypeFilter(type="user"),
+        ],
+        context={}
+    )
 
-#     return await client.list_users(body, options)
+    return await client.list_users(body, options)
